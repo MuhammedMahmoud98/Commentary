@@ -1,0 +1,57 @@
+@import "../../../assets/scss/variables";
+
+// component mixins
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-aligned {
+  display: flex;
+  align-items: center;
+}
+
+// component classes
+.post-comments {
+  position: relative;
+  .comments-list {
+    margin: 0.5rem 0rem;
+    padding-bottom: 1rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+
+.comment-form{
+  @include flex-between;
+
+  .comment-image {
+    position: relative;
+    width: 35px;
+    flex-grow: 1;
+
+    img {
+      width: 35px;
+    }
+  }
+
+  .form-input {
+    position: relative;
+    margin-left: 0.5rem;
+    flex-grow: 100;
+
+    .paper-icon {
+      position: absolute;
+      right: 5%;
+      top: 30%;
+      cursor: pointer;
+      transition: 0.2s;
+
+      &:active {
+        transform: scale(0.7);
+      }
+    }
+  }
+}

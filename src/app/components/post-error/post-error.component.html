@@ -1,0 +1,10 @@
+<div class="error-div" [ngClass]="alertType === 'success' ? 'is-success' : 'is-danger'" *ngIf="(errorBoolean | async)"
+     [@slideInOut]>
+
+  <span class="error-message">
+    <i *ngIf="alertType === 'danger'" class="fa fa-exclamation-triangle error-icon" aria-hidden="true"></i>
+  <i *ngIf="alertType === 'success'" class="fa fa-check-circle error-icon" aria-hidden="true"></i>
+    {{errorMessage}}
+  </span>
+  <div *ngIf="alertType === 'success'" (click)="closeSuccessAlert()" class="close-alert"><i class="fa fa-times" aria-hidden="true"></i></div>
+</div>

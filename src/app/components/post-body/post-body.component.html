@@ -1,0 +1,40 @@
+
+
+<div class="post-body">
+  <!-- Caption Part -->
+  <div class="post-caption text-md">
+    {{'Follow standard conventions. Keep it simple stupid. Simpler is always better. Reduce complexity as much as possible.'}}
+  </div>
+  <!-- Image Part -->
+  <div class="post-image mt-1" (dblclick)="toggleLike()">
+    <img class="img-responsive" src="../../../assets/images/post-image.jpeg" alt="post-image">
+  </div>
+  <!-- Statistics Part -->
+  <div class="post-statistics mx-1 pb-5">
+    <div class="likes-number">
+      <span class="flex-rounded-center likes">
+        <i class="fa fa-heart" aria-hidden="true"></i>
+      </span>
+      <span class=" text-md text-muted likes-counter"><span *ngIf="isLiked">You and </span>51k</span>
+    </div>
+    <div class="comments-number">
+      <span class="text-md text-muted">{{(commentsCounter$ | async)}} Comments</span>
+    </div>
+  </div>
+  <!-- Action Buttons Part -->
+  <div class="action-buttons mx-1">
+    <button class="action-btn" (click)="toggleLike()">
+      <i *ngIf="!isLiked" class="far fa-heart"></i>
+      <i *ngIf="isLiked" class="fas fa-heart liked"></i>
+      {{isLiked ? 'Liked' : 'Like'}}
+    </button>
+    <button class="action-btn">
+      <i class="far fa-comment"></i>
+      Comment
+    </button>
+    <button class="action-btn">
+      <i class="fas fa-share"></i>
+      Share
+    </button>
+  </div>
+</div>

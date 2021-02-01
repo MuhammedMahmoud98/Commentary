@@ -1,0 +1,45 @@
+@import "../../../assets/scss/variables";
+
+
+
+.error-div {
+  position: fixed;
+  left: 3%;
+  bottom: 5%;
+  color: $semi-white;
+  border-radius: $border-radius;
+  //padding: 1rem 0rem 1rem 1rem;
+  z-index: 1000;
+  display: flex;
+  align-items: stretch;
+  .error-icon {
+    margin-right: 0.5rem;
+  }
+  .error-message {
+    padding: 1rem;
+  }
+  .close-alert {
+    padding: 0.3rem 0.7rem;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(black, 0.06);
+    }
+  }
+}
+
+
+
+.is-danger {
+  background-color: $error-red;
+  border-left: 7px solid #a4161a;
+  box-shadow: 3px 3px 8px rgba($error-red, 0.6);
+}
+
+.is-success {
+  background-color: #46C93A;
+  border-left: 7px solid #004b23;
+  box-shadow: 3px 3px 8px rgba($success-green, 0.6);
+}
