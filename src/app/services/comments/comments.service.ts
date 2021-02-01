@@ -9,7 +9,6 @@ import {map} from 'rxjs/operators';
 })
 export class CommentsService {
 
-
   headerPrototype = {
     headers: {
       'x-api-key': `${environment.apiKey}`,
@@ -30,7 +29,7 @@ export class CommentsService {
   }
 
   updateComment(parentId: number, updateBody: CommentContainer): Observable<any> {
-    return this.http.put(`https://acc07519-c837-44ed-9a24-93a1df1ed16b.mock.pstmn.io/v1/comments/${parentId}`, updateBody, this.headerPrototype);
+    return this.http.put(`${environment.apiUrl}comments/${parentId}`, updateBody, this.headerPrototype);
   }
 
   deleteComment(commentId: number): Observable<any> {
