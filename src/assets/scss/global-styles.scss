@@ -1,0 +1,297 @@
+// scss global variables import
+@import "variables";
+
+
+
+.container {
+  width: 552px;
+  margin: 50px auto;
+  background-color: #fff;
+  box-shadow: 1px 3px 4px rgba(black, 0.06);
+  border-radius: $border-radius;
+}
+
+// FONT TRANSFORM START
+.text-muted {
+  color: $text-muted;
+  font-size: 14px;
+}
+
+.text-sm {
+  font-size: 12px;
+}
+
+.text-xsm {
+  font-size: 10px;
+}
+
+.text-md {
+  font-size: 14px;
+}
+
+.text-bold {
+  font-weight: 600;
+}
+
+// FONT TRANSFORM END
+
+
+// FLEX CLASSES START
+.flex-rounded-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.flex-centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// FLEX CLASSES END
+
+
+// MARGIN AND PADDING START
+
+@for $i from 1 through 5 {
+  .mx-#{$i} {
+    margin: 0 #{$i}rem;
+  }
+
+  .my-#{$i} {
+    margin: #{$i}px 0;
+  }
+
+  .ml-#{$i} {
+    margin-left: #{$i}rem;
+  }
+
+  .mr-#{$i} {
+    margin-right: #{$i}rem;
+  }
+
+  .mt-#{$i} {
+    margin-top: #{$i}rem;
+  }
+
+  .px-#{$i} {
+    padding: 0 #{$i}rem;
+  }
+
+  .py-#{$i} {
+    padding: #{$i}rem 0;
+  }
+
+  .pl-#{$i} {
+    padding-left: #{$i}rem;
+  }
+
+  .pr-#{$i} {
+    padding-right: #{$i}rem;
+  }
+
+  .pb-#{$i} {
+    padding-bottom: #{$i}px;
+  }
+
+  .pt-#{$i} {
+    padding-top: #{$i}px;
+  }
+
+}
+
+// MARGIN AND PADDING END
+
+
+// MISCELLANEOUS CLASSES START
+.user-online {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  bottom: 0;
+  right: 0;
+  background-color: green;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.action-btn {
+  outline: none;
+  width: 100%;
+  background-color: $light-gray;
+  border: none;
+  border-radius: $border-radius;
+  padding: 0.5rem 1.5rem;
+  color: rgba(black, 0.5);
+  transition: 0.2s;
+  margin: 0.5rem 0rem;
+  &:nth-child(2) {
+    margin: 0rem 0.3rem;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: rgba(black, 0.2);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+}
+
+.img-responsive {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.form-control {
+  outline: none;
+  border: 1px solid $light-gray;
+  padding: 0.5rem 1rem;
+  color: $semi-black;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: rgba(black, 0.06);
+  width: 100%;
+  &::placeholder {
+    color: $semi-black;
+  }
+}
+
+.separator {
+  margin: 0rem 0.2rem;
+  color: $semi-muted;
+}
+
+
+.comment-element {
+  display: flex;
+  margin: 0.4rem 0rem;
+  .user-image {
+    margin-right: 0.5rem;
+    position: relative;
+    z-index: 50!important;
+    img {
+      border: 3px solid #fff;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 45%;
+      bottom: 0;
+      flex-grow: 100;
+      width: 2px;
+      background-color: $light-gray;
+      height: 100%;
+      z-index: -1;
+    }
+  }
+
+  .comment-part {
+    width: 100%;
+    .comment-text {
+      box-sizing: border-box;
+      .comment-top-part {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .commentator-name {
+          color: $semi-black;
+        }
+      }
+
+      .comment-title {
+        color: $dark-gray;
+      }
+      box-sizing: border-box;
+      padding: 0.5rem;
+      background-color: $light-gray;
+      border-radius: $border-radius;
+
+
+      .commentator-text {
+        font-size: 13px;
+        text-wrap: normal;
+        color: $semi-muted;
+      }
+    }
+
+    .comment-info {
+      margin-left: 0.2rem;
+      display: inline-block;
+      .comment-actions {
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        padding: 0.1rem;
+        transition: 0.2s;
+        border-radius: $border-radius;
+        &:hover {
+          background-color: $light-gray;
+        }
+      }
+    }
+  }
+}
+
+.cancel-btn {
+  outline: none;
+  padding: 0.2rem 0.6rem;
+  border: none;
+  transition: 0.2s;
+  color: $semi-black;
+  margin: 0.2rem;
+  cursor: pointer;
+  border-radius: $border-radius;
+  &:hover {
+    background-color: rgba(black, 0.1);
+  }
+  &:active {
+    transform: scale(0.9);
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+
+.edit-control {
+  background-color: #faf9f9;
+  border: 1px solid rgba(black, 0.04);
+  padding: 0.5rem 0.7rem;
+  box-sizing: border-box;
+  width: 100%;
+  resize: none;
+  border-radius: $border-radius;
+}
+
+
+// MISCELLANEOUS CLASSES END
+
+
+@media only screen and (max-width: 992px) {
+
+}
+
+
+@media only screen and (max-width: 767px) {
+  .container {
+    width: 85%;
+  }
+  .action-btn {
+    &:nth-child(2) {
+      margin: 0rem;
+    }
+  }
+}
+
+
+@media only screen and (max-width: 450px) {
+  .container {
+    width: 95%;
+  }
+}
+

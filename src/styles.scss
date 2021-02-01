@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import "assets/scss/variables";
+@import "assets/scss/global-styles";
+
+// font family import
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital@0;1&display=swap');
+
+body, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: $light-gray;
+  font-family: 'Noto Sans', sans-serif;
+}

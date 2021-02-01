@@ -1,0 +1,67 @@
+@import "../../../assets/scss/variables";
+
+// component mixins
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-aligned {
+  display: flex;
+  align-items: center;
+}
+
+@mixin border-bottom {
+  border-bottom: 1px solid $light-gray;
+}
+// component classes
+.post-body {
+  .post-caption {
+    padding: 0rem 0.9rem;
+  }
+
+  .post-statistics {
+    @include flex-between;
+    @include border-bottom;
+    margin-top: 0.5rem;
+    .likes-number {
+      @include flex-aligned;
+      cursor: pointer;
+      .likes {
+        width: 30px;
+        height: 30px;
+        background-color: $light-gray;
+        i {
+          color: $semi-red;
+        }
+      }
+      .likes-counter {
+        margin-left: 0.5rem;
+      }
+    }
+
+    .comments-number {
+      @include flex-aligned;
+      cursor: pointer;
+    }
+  }
+
+  .action-buttons {
+    @include flex-between;
+    @include border-bottom;
+    .liked {
+      color: $semi-red;
+    }
+  }
+}
+
+
+
+@media only screen and (max-width: 767px) {
+  .post-body {
+    .action-buttons {
+      flex-direction: column;
+    }
+  }
+}

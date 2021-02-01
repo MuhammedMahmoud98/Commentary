@@ -1,0 +1,56 @@
+@import "../../../assets/scss/variables";
+
+// component mixins
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@mixin flex-align-center {
+  display: flex;
+  align-items: center;
+}
+
+// component classes
+.post-header {
+  padding: $header-padding;
+  @include flex-between;
+
+  .post-owner-part {
+    @include flex-align-center;
+    .user-image {
+      position: relative;
+      width: 45px;
+      height: 45px;
+      img {
+        width: 45px;
+        border-radius: 50%;
+      }
+    }
+
+    .user-info {
+      margin-left: 0.5rem;
+      color: $semi-black;
+    }
+  }
+
+  .post-menu-part {
+    background-color: $light-gray;
+    width: 20px;
+    height: 20px;
+    padding: 0.2rem;
+    transition: 0.1s;
+    &:hover {
+      color: #000;
+      cursor: pointer;
+    }
+  }
+}
+
+// component responsive
+@media only screen and (max-width: 450px) {
+  .post-header {
+    padding: $header-responsive-padding;
+  }
+}
+
