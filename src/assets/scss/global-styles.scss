@@ -216,6 +216,7 @@
         font-size: 13px;
         text-wrap: normal;
         color: $semi-muted;
+        word-wrap: break-word;
       }
     }
 
@@ -254,9 +255,21 @@
   }
   &:disabled {
     cursor: not-allowed;
+    transform: scale(1);
   }
 }
 
+
+.submit-btn {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  padding: 0;
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
 
 .edit-control {
   background-color: #faf9f9;
@@ -265,9 +278,13 @@
   box-sizing: border-box;
   width: 100%;
   resize: none;
+  outline: none;
   border-radius: $border-radius;
 }
 
+.link {
+  word-break: break-all!important;
+}
 
 // MISCELLANEOUS CLASSES END
 
