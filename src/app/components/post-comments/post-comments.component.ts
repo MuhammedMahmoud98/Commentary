@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {State} from '../../store/reducers/comments.reducer';
 import {CommentsService} from '../../services/comments/comments.service';
-import {CommentContainer, RepliesContainer} from '../../models/comments.model';
-import {IncreaseComments, LoadComments} from '../../store/actions/comments.action';
-import {map} from 'rxjs/operators';
+import {CommentContainer, Post, RepliesContainer} from '../../models/comments.model';
+import {DecreaseComments, IncreaseComments, LoadComments} from '../../store/actions/comments.action';
+import {map, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {AddComment} from '../../store/actions/AddingComments.action';
 import {CloseEditInput, EditComment, OpenEditInput} from '../../store/actions/EdditComments.action';
@@ -26,7 +26,6 @@ import {DeleteComment} from '../../store/actions/DeletingComments.action';
       ]),
       transition(':leave', [
         group([
-          animate('200ms ease-in', style({opacity: '0'})),
           animate('200ms ease-in', style({transform: 'scale(0)'}))
         ]),
       ])
@@ -65,12 +64,12 @@ export class PostCommentsComponent implements OnInit {
     this.commentIsDeleted$ = this.store.select(store => store.comments).pipe(map(comments => comments.successOccurred));
   }
 
-  // GET ALL COMMENTS
+
   loadAllComments(): void {
     this.store.dispatch(new LoadComments());
   }
 
-  // ADDING COMMENTS AND REPLIES START
+
   addNewComment(): void {
     console.log('COMMENT');
     this.store.dispatch(new AddComment(this.commentPrototype('Different opinion', 'Muhammad Mahmoud', this.commentText), null));
@@ -80,10 +79,9 @@ export class PostCommentsComponent implements OnInit {
 
   addNewReply(parentCommentIndex: number, parentCommentId: any, elementId: string): void {
     console.log(parentCommentIndex, 'PARENT INDEX');
-    this.store.dispatch(new AddComment(this.replyPrototype('Reply Title', 'Muhammad Mahmoud', this.replyCommentText, parentCommentId), parentCommentIndex));
+    this.store.dispatch(new AddComment(this.replyPrototype('Reply Part', 'Muhammad Mahmoud', this.replyCommentText, parentCommentId), parentCommentIndex));
     this.clearInput(elementId);
     this.increaseComments();
-    this.replyCommentText = '';
   }
 
   commentPrototype(title: string, name: string, comment: string): CommentContainer {
@@ -100,6 +98,7 @@ export class PostCommentsComponent implements OnInit {
     };
   }
 
+
   replyPrototype(title: string, name: string, comment: string, parentId: number): RepliesContainer {
     return {
       id: Math.floor(Math.random() * 1000),
@@ -112,7 +111,13 @@ export class PostCommentsComponent implements OnInit {
     };
   }
 
-  // ADDING COMMENTS AND REPLIES END
+  increaseComments(): void {
+    this.store.dispatch(new IncreaseComments());
+  }
+
+  // decreaseComments(): void {
+  //   this.store.dispatch(new DecreaseComments());
+  // }
 
   // DELETE COMMENT PART START
   removeComment(parentIndex: number, replyIndex: number | null, commentId: any, replies: any): void {
@@ -176,7 +181,13 @@ export class PostCommentsComponent implements OnInit {
   }
 
 
-  // HELPER FUNCTIONS
+
+  commentDate(timeStamp: any): string {
+    const timestamp = new Date(timeStamp);
+    const splitDate = timestamp.toDateString().split(' ');
+    return `${splitDate[1]} ${splitDate[2]}`;
+  }
+
   invalidComment(): boolean {
     return this.commentIsEdited();
   }
@@ -185,12 +196,9 @@ export class PostCommentsComponent implements OnInit {
     return this.editingText.trim() === '';
   }
 
-  commentDate(timeStamp: any): string {
-    const timestamp = new Date(timeStamp);
-    const splitDate = timestamp.toDateString().split(' ');
-    return `${splitDate[1]} ${splitDate[2]}`;
-  }
-
+  // commentContainsBadWords(): boolean {
+  //   return false;
+  // }
   checkForLink(comment: any): any {
     const splittedString = comment.split(' ');
 
@@ -198,7 +206,7 @@ export class PostCommentsComponent implements OnInit {
 
     splittedString.forEach((part: string, i: number) => {
       if (part.startsWith('http')) {
-        link = `<a href=${part} class="link"  target='_blank'>${part}</a>`;
+        link = `<a href=${part} class='link' target='_blank'>${part}</a>`;
         splittedString[i] = link;
       }
     });
@@ -210,11 +218,6 @@ export class PostCommentsComponent implements OnInit {
     const element = document.getElementById(`${id}`) as HTMLInputElement;
     element.value = '';
   }
-
-  increaseComments(): void {
-    this.store.dispatch(new IncreaseComments());
-  }
-
   trackByFn(index: number, item: any): number { // updating(render) only the changed part of the dom not all the dom
     return item.id; // or item.id
   }

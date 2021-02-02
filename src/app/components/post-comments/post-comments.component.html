@@ -1,3 +1,4 @@
+
 <div class="post-comments my-5">
 
   <ng-container *ngIf="!(loadComments$ | async)">
@@ -11,124 +12,106 @@
         <input type="text" [(ngModel)]="commentText" name="comment-text" placeholder="Write a comment..."
                class="form-control">
         <span class="paper-icon flex-centered">
-          <button class="submit-btn" type="submit" [disabled]="commentText.trim() === ''">
-            <i class="fa fa-paper-plane text-muted" aria-hidden="true"></i>
-          </button>
+        <i class="fa fa-paper-plane text-muted" aria-hidden="true"></i>
       </span>
       </div>
     </form>
 
     <!-- COMMENTS SECTION -->
-    <div class="comments-list px-1">
-      <ng-container *ngFor="let commentObj of (commentsList$ | async);trackBy:trackByFn;let i = index">
-        <div class="comment-element" [@translateAndScale] *ngIf="commentObj?.user?.name">
-          <div class="user-image">
-            <img src="/assets/images/user.png" alt="">
-          </div>
-          <div class="comment-part">
-            <div class="comment-text">
-              <div class="comment-top-part">
-                <span class="commentator-name text-md text-bold">{{commentObj?.user?.name | titlecase}}</span>
-                <span class="comment-timestamp text-xsm"> {{commentObj?.timestamp | date:'shortTime'}}
-                  | {{commentDate(commentObj?.timestamp)}}</span>
-              </div>
-              <div class="comment-title text-sm pb-5 text-bold">- {{commentObj?.title | titlecase}}</div>
-              <div *ngIf="!commentObj?.editing" [innerHTML]="checkForLink(commentObj?.comment)"
-                   class="commentator-text"></div>
-              <form *ngIf="commentObj?.editing" (ngSubmit)="editComment(commentObj, i, null)">
-                <textarea [value]="commentObj?.comment" (input)="takeEditableText($event)" [name]="i + 'parentComment'"
-                          [id]="i + 'parentComment'" cols="30" rows="4" class="edit-control"></textarea>
-                <div>
-                  <button (click)="cancelEditing(i, null)" class="cancel-btn mr-1">cancel</button>
-                  <button type='submit' class="cancel-btn" [disabled]="invalidComment()">Save</button>
-                </div>
-              </form>
+      <div class="comments-list px-1">
+        <ng-container *ngFor="let commentObj of (commentsList$ | async);trackBy:trackByFn;let i = index">
+          <div class="comment-element" [@translateAndScale] *ngIf="commentObj?.user?.name">
+            <div class="user-image">
+              <img src="/assets/images/user.png" alt="">
             </div>
-            <div class="comment-info text-sm">
-              <span class="like-the-comment comment-actions">Like </span>
-              <span class="separator">•</span>
-              <label class="reply-to-comment comment-actions" [for]="i+ 'Reply'"> Reply </label>
-              <span class="separator">•</span>
-              <label [for]="i + 'parentComment'" class="reply-to-comment comment-actions"
-                     (click)="openCommentEdit(commentObj, i, null)"> Edit </label>
-              <span class="separator">•</span>
-              <button class="cancel-btn text-sm" (click)="removeComment(i, null, commentObj?.id, commentObj?.replies)"
-                      [disabled]="commentObj?.isDeleting"> {{commentObj?.isDeleting ? 'Deleting...' : 'Delete'}} </button>
-            </div>
-
-            <!-- COMMENT REPLIES -->
-            <div class="comment-replies">
-              <div class="comment-element" [@translateAndScale]
-                   *ngFor="let reply of commentObj?.replies;trackBy:trackByFn; let j = index;let isLast = last;">
-                <div class="user-image">
-                  <img src="/assets/images/user.png" alt="">
+            <div class="comment-part" >
+              <div class="comment-text">
+                <div class="comment-top-part">
+                  <span class="commentator-name text-md text-bold">{{commentObj?.user?.name | titlecase}}</span>
+                  <span class="comment-timestamp text-xsm"> {{commentObj?.timestamp | date:'shortTime'}}
+                    | {{commentDate(commentObj?.timestamp)}}</span>
                 </div>
-                <div class="comment-part">
-                  <div class="comment-text">
-                    <div class="comment-top-part">
-                      <span class="commentator-name text-md text-bold">{{reply?.user?.name | titlecase}}</span>
-                      <span class="comment-timestamp text-xsm"> {{reply?.timestamp | date:'shortTime'}}
-                        | {{commentDate(commentObj?.timestamp)}}</span>
-                    </div>
-                    <div class="comment-title text-sm pb-5 text-bold">{{reply?.title | titlecase}}</div>
-                    <div *ngIf="!reply?.editing" [innerHTML]="checkForLink(reply?.comment)"
-                         class="commentator-text"></div>
-                    <form *ngIf="reply?.editing" (ngSubmit)="editComment(reply, i, j)">
-                      <textarea [value]="reply?.comment" (input)="takeEditableText($event)"
-                                [name]="i + 'replyComment' + j" [id]="i + 'replyComment' + j" cols="30" rows="4"
-                                class="edit-control"></textarea>
-                      <div>
-                        <button (click)="cancelEditing(i, j)" class="cancel-btn">cancel</button>
-                        <button type='submit' class="cancel-btn" [disabled]="invalidComment()">Save</button>
-                      </div>
-                    </form>
+                <div class="comment-title text-sm pb-5 text-bold">- {{commentObj?.title | titlecase}}</div>
+                <div *ngIf="!commentObj?.editing" [innerHTML]="checkForLink(commentObj?.comment)" class="commentator-text"></div>
+                <form *ngIf="commentObj?.editing" (ngSubmit)="editComment(commentObj, i, null)">
+                  <textarea  [value]="commentObj?.comment" (input)="takeEditableText($event)" [name]="i + 'parentComment'" [id]="i + 'parentComment'" cols="30" rows="4" class="edit-control"></textarea>
+                  <div>
+                    <button (click)="cancelEditing(i, null)" class="cancel-btn mr-1">cancel</button>
+                    <button type='submit' class="cancel-btn" [disabled]="invalidComment()">Save</button>
                   </div>
-                  <div class="comment-info text-sm">
-                    <span class="like-the-comment comment-actions">Like </span>
-                    <span class="separator">•</span>
-                    <label class="reply-to-comment comment-actions" [for]="i+ 'Reply'"> Reply </label>
-                    <span class="separator">•</span>
-                    <label [for]="i + 'replyComment' + j" class="reply-to-comment comment-actions"
-                           (click)="openCommentEdit(reply, i, j)"> Edit </label>
-                    <span class="separator">•</span>
-                    <button class="cancel-btn text-sm" (click)="removeComment(i, j, reply?.id, null)"
-                            [disabled]="reply?.isDeleting"> {{reply?.isDeleting ? 'Deleting...' : 'Delete'}} </button>
-                  </div>
-
-
-                </div>
+                </form>
               </div>
+              <div class="comment-info text-sm">
+                <span class="like-the-comment comment-actions">Like </span>
+                <span class="separator">•</span>
+                <span class="reply-to-comment comment-actions"> Reply </span>
+                <span class="separator">•</span>
+                <label [for]="i + 'parentComment'" class="reply-to-comment comment-actions" (click)="openCommentEdit(commentObj, i, null)"> Edit </label>
+                <span class="separator">•</span>
+                <button class="cancel-btn text-sm" (click)="removeComment(i, null, commentObj?.id, commentObj?.replies)" [disabled]="commentObj?.isDeleting"> {{commentObj?.isDeleting ? 'Deleting...' : 'Delete'}} </button>
+              </div>
+
               <!-- COMMENT REPLIES -->
-              <!-- ADD REPLY SECTION -->
-              <form class="comment-form" (ngSubmit)="addNewReply(i, commentObj?.id, (i+ 'Reply'))">
-                <div class="comment-image flex-rounded-center">
-                  <img class="flex-rounded-center" src="/assets/images/post-owner.jpg" alt="user-image">
-                  <span class="user-online"></span>
+              <div class="comment-replies">
+                <div class="comment-element" *ngFor="let reply of commentObj?.replies;trackBy:trackByFn; let j = index;let isLast = last;">
+                  <div class="user-image">
+                    <img src="/assets/images/user.png" alt="">
+                  </div>
+                  <div class="comment-part">
+                    <div class="comment-text">
+                      <div class="comment-top-part">
+                        <span class="commentator-name text-md text-bold">{{reply?.user?.name | titlecase}}</span>
+                        <span class="comment-timestamp text-xsm"> {{reply?.timestamp | date:'shortTime'}}
+                          | {{commentDate(commentObj?.timestamp)}}</span>
+                      </div>
+                      <div *ngIf="!reply?.editing" [innerHTML]="checkForLink(reply?.comment)" class="commentator-text"></div>
+                      <form *ngIf="reply?.editing" (ngSubmit)="editComment(reply, i, j)">
+                        <textarea  [value]="reply?.comment" (input)="takeEditableText($event)" [name]="i + 'replyComment' + j" [id]="i + 'replyComment' + j" cols="30" rows="4" class="edit-control"></textarea>
+                        <div>
+                          <button (click)="cancelEditing(i, j)" class="cancel-btn">cancel</button>
+                          <button type='submit' class="cancel-btn" [disabled]="invalidComment()">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                    <div class="comment-info text-sm">
+                      <span class="like-the-comment comment-actions">Like </span>
+                      <span class="separator">•</span>
+                      <span class="reply-to-comment comment-actions"> Reply </span>
+                      <span class="separator">•</span>
+                      <label [for]="i + 'replyComment' + j" class="reply-to-comment comment-actions" (click)="openCommentEdit(reply, i, j)"> Edit </label>
+                      <span class="separator">•</span>
+                      <button class="cancel-btn text-sm" (click)="removeComment(i, j, reply?.id, null)" [disabled]="reply?.isDeleting"> {{reply?.isDeleting ? 'Deleting...' : 'Delete'}} </button>
+                    </div>
+
+
+                  </div>
                 </div>
-                <div class="form-input">
-                  <input type="text" [name]="i+ 'Reply'" [id]="i+ 'Reply'" (input)="takingReplyText($event)"
-                         placeholder="Write a reply..."
-                         class="form-control">
-                  <span class="paper-icon flex-centered">
-                    <button class="submit-btn" type="submit" [disabled]="replyCommentText.trim() === ''">
-                        <i class="fa fa-paper-plane text-muted" aria-hidden="true"></i>
-                    </button>
+                <!-- COMMENT REPLIES -->
+                <!-- ADD REPLY SECTION -->
+                <form class="comment-form" (ngSubmit)="addNewReply(i, commentObj?.id, (i+ 'Reply'))">
+                  <div class="comment-image flex-rounded-center">
+                    <img class="flex-rounded-center" src="/assets/images/post-owner.jpg" alt="user-image">
+                    <span class="user-online"></span>
+                  </div>
+                  <div class="form-input">
+                    <input type="text" [name]="i+ 'Reply'" [id]="i+ 'Reply'" (input)="takingReplyText($event)" placeholder="Write a reply..."
+                           class="form-control">
+                    <span class="paper-icon flex-centered">
+        <i class="fa fa-paper-plane text-muted" aria-hidden="true"></i>
       </span>
-                </div>
-              </form>
+                  </div>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
-      </ng-container>
-    </div>
+        </ng-container>
+      </div>
 
   </ng-container>
   <!-- COMMENTS SPINNER -->
   <app-post-loader *ngIf="(loadComments$ | async)"></app-post-loader>
   <!-- ERROR COMPONENT -->
-  <app-post-error [errorMessage]="'Network error!, Please try again.'" [alertType]="'danger'"
-                  [errorBoolean]="error$"></app-post-error>
+  <app-post-error [errorMessage]="'Network error!, Please try again.'" [alertType]="'danger'"  [errorBoolean]="error$"></app-post-error>
   <!-- SUCCESS ALERT -->
-  <app-post-error [errorMessage]="'Comment deleted successfully!'" [alertType]="'success'"
-                  [errorBoolean]="commentIsDeleted$"></app-post-error>
+  <app-post-error [errorMessage]="'Comment deleted successfully!'" [alertType]="'success'" [errorBoolean]="commentIsDeleted$"></app-post-error>
 </div>
