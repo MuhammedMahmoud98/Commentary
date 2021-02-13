@@ -3,7 +3,7 @@ import {Store} from '@ngrx/store';
 import {State} from '../../store/reducers/comments.reducer';
 import {CommentsService} from '../../services/comments/comments.service';
 import {CommentContainer, RepliesContainer} from '../../models/comments.model';
-import {IncreaseComments, LoadComments} from '../../store/actions/comments.action';
+import {IncreaseComments, LoadComments, ToggleLikeComment} from '../../store/actions/comments.action';
 import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {AddComment} from '../../store/actions/AddingComments.action';
@@ -171,6 +171,12 @@ export class PostCommentsComponent implements OnInit {
 
   // EDIT COMMENT PART END
 
+  // TOGGLE LIKE START
+  toggleLike(parentIndex: number, replyIndex: number | null): void {
+    this.store.dispatch(new ToggleLikeComment(parentIndex, replyIndex));
+  }
+
+  // TOGGLE LIKE END
   takingReplyText(text: any): void {
     this.replyCommentText = text.target.value;
   }

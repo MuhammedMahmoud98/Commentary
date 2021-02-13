@@ -45,7 +45,7 @@
               </form>
             </div>
             <div class="comment-info text-sm">
-              <span class="like-the-comment comment-actions">Like </span>
+              <span class="like-the-comment comment-actions" [class.commentIsLiked]="commentObj?.isLiked" (click)="toggleLike(i, null)">{{commentObj?.isLiked ? 'Liked' : 'Like'}} </span>
               <span class="separator">•</span>
               <label class="reply-to-comment comment-actions" [for]="i+ 'Reply'"> Reply </label>
               <span class="separator">•</span>
@@ -84,7 +84,7 @@
                     </form>
                   </div>
                   <div class="comment-info text-sm">
-                    <span class="like-the-comment comment-actions">Like </span>
+                    <span class="like-the-comment comment-actions" (click)="toggleLike(i, j)" [class.commentIsLiked]="reply?.isLiked">{{reply?.isLiked ? 'Liked' : 'Like'}} </span>
                     <span class="separator">•</span>
                     <label class="reply-to-comment comment-actions" [for]="i+ 'Reply'"> Reply </label>
                     <span class="separator">•</span>
