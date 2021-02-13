@@ -14,6 +14,17 @@ export class CommentsEffect {
   constructor(private action$: Actions, public commentsService: CommentsService) {
   }
 
+  // @Effect() loadComments$ = createEffect(() => this.action$.pipe(
+  //   ofType(LOAD_COMMENTS),
+  //   mergeMap(() => this.commentsService.getPostComments()
+  //     .pipe(
+  //     map((postResponse) => new LoadCommentsSuccess(PostClass.newCommentsTree(postResponse?.comments?.data
+  //       ?.map(comment => ({...comment, editing: false, isLoading: false, hasError: false}))))),
+  //     catchError( (err) => of(new LoadCommentsFail(err)))
+  //   ))
+  // ));
+
+
   @Effect() loadComments$ = createEffect(() => this.action$.pipe(
     ofType(LOAD_COMMENTS),
     mergeMap((action) => this.commentsService.getPostComments()
