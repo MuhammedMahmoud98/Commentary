@@ -9,7 +9,7 @@ export const LOAD_COMMENTS_FAIL = '[Comments] Load Comments Fail';
 export const CLOSE_SUCCESS_ALERT = '[Comments] Close Success Alert';
 export const INCREASE_COMMENTS = '[Comments] Increase Comments';
 export const DECREASE_COMMENTS = '[Comments] Decrease Comments';
-
+export const TOGGLE_LIKE_COMMENT = '[Comments] Toggle Like Comment';
 
 
 export class LoadComments implements Action {
@@ -42,6 +42,11 @@ export class DecreaseComments implements Action {
   constructor(public numberOfComments: any) {}
 }
 
+export class ToggleLikeComment implements Action {
+  readonly type = TOGGLE_LIKE_COMMENT;
+  constructor(public parentIndex: number, public replyIndex: number | null) {}
+}
+
 
 export type CommentActions =
-  LoadComments | LoadCommentsSuccess | LoadCommentsFail | CloseSuccessAlert | IncreaseComments | DecreaseComments;
+  LoadComments | LoadCommentsSuccess | LoadCommentsFail | CloseSuccessAlert | IncreaseComments | DecreaseComments | ToggleLikeComment;

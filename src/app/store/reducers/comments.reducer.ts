@@ -6,7 +6,8 @@ import {
   INCREASE_COMMENTS,
   LOAD_COMMENTS,
   LOAD_COMMENTS_FAIL,
-  LOAD_COMMENTS_SUCCESS
+  LOAD_COMMENTS_SUCCESS,
+  TOGGLE_LIKE_COMMENT
 } from '../actions/comments.action';
 import {ADD_COMMENT, ADD_COMMENT_FAIL, ADD_COMMENT_SUCCESS, AddingCommentActions} from '../actions/AddingComments.action';
 import {
@@ -215,6 +216,20 @@ export function commentsReducer(state = initialState, action: CommentActions | A
       return {
         ...state,
         commentsCount: commentsCountDecreaseCopy.commentsCount
+      };
+    case TOGGLE_LIKE_COMMENT:
+      const likeCommentState = {...state};
+      const likeCommentsCopy = JSON.parse(JSON.stringify(likeCommentState.commentsList));
+
+      if (!action.replyIndex && action.replyIndex !== 0) {
+        likeCommentsCopy[action.parentIndex].isLiked ? likeCommentsCopy[action.parentIndex].isLiked = false : likeCommentsCopy[action.parentIndex].isLiked = true;
+      } else {
+        likeCommentsCopy[action.parentIndex].replies[action.replyIndex].isLiked ? likeCommentsCopy[action.parentIndex].replies[action.replyIndex].isLiked = false : likeCommentsCopy[action.parentIndex].replies[action.replyIndex].isLiked = true;
+      }
+
+      return {
+        ...state,
+        commentsList: likeCommentsCopy
       };
     default:
       return state;

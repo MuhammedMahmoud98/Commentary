@@ -30,7 +30,7 @@ export class CommentsEffect {
     mergeMap((action) => this.commentsService.getPostComments()
       .pipe(
         map(postResponse => ({commentsCount: postResponse.comments?.meta?.numberOfComments, commentsList: postResponse.comments?.data
-            ?.map(comment => ({...comment, editing: false, isLoading: false, hasError: false}))})),
+            ?.map(comment => ({...comment, editing: false, isLoading: false, hasError: false, isLiked: false}))})),
         map((editedResponse) => new LoadCommentsSuccess(PostClass.newCommentsTree(editedResponse?.commentsList), editedResponse?.commentsCount)),
         catchError( (err) => of(new LoadCommentsFail(err)))
       ))

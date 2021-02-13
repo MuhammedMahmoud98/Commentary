@@ -24,6 +24,7 @@ export interface CommentContainer {
   isLoading?: boolean;
   hasError?: boolean;
   isDeleting?: boolean;
+  isLiked?: boolean;
 }
 
 
@@ -39,6 +40,7 @@ export interface RepliesContainer {
   isLoading?: boolean;
   hasError?: boolean;
   isDeleting?: boolean;
+  isLiked?: boolean;
 }
 
 
