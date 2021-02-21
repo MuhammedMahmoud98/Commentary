@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {State} from '../../store/reducers/comments.reducer';
 import {CommentsService} from '../../services/comments/comments.service';
-import {CommentContainer, Post, RepliesContainer} from '../../models/comments.model';
-import {DecreaseComments, IncreaseComments, LoadComments} from '../../store/actions/comments.action';
-import {map, tap} from 'rxjs/operators';
+import {CommentContainer, RepliesContainer} from '../../models/comments.model';
+import {IncreaseComments, LoadComments, ToggleLikeComment} from '../../store/actions/comments.action';
+import {map} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {AddComment} from '../../store/actions/AddingComments.action';
 import {CloseEditInput, EditComment, OpenEditInput} from '../../store/actions/EdditComments.action';
@@ -176,6 +176,12 @@ export class PostCommentsComponent implements OnInit {
 
   // EDIT COMMENT PART END
 
+  // TOGGLE LIKE START
+  toggleLike(parentIndex: number, replyIndex: number | null): void {
+    this.store.dispatch(new ToggleLikeComment(parentIndex, replyIndex));
+  }
+
+  // TOGGLE LIKE END
   takingReplyText(text: any): void {
     this.replyCommentText = text.target.value;
   }
